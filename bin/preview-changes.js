@@ -65,8 +65,10 @@ export default async function previewChanges({
   // Remove "docs" and ".adoc" from path
   const cleanChangePath = (file) => file.slice(4, -5);
 
-  let body = adocChanges.length ? `Preview URL(s):\n\n${adocChanges.map((change) => `- ${host}/prisma/prisma-cloud${cleanChangePath(change)}?branch=${branch}`).join('\n')}`
-    : `Default Preview URL: ${host}${fallbackPath}?branch=${branch}`;
+  const buildLink = (href) => `<a href="${href}" target="_blank">${href.split('?')[0].split('/').slice(5).join('/')}</a>`
+
+  let body = adocChanges.length ? `Preview URL(s):\n\n${adocChanges.map((change) => `- ${buildLink(`${host}/prisma/prisma-cloud${cleanChangePath(change)}?branch=${branch}`)}`).join('\n')}`
+    : `Default Preview URL: ${buildLink(`${host}${fallbackPath}?branch=${branch}`)}`;
 
   if (missingReferences.length) {
     // Remove home/runner/work/repo/dir

@@ -1,6 +1,6 @@
 ---
 kind: book
-title: Prisma Cloud Intelligence Stream Notifications
+title: Prisma Cloud Intelligence Stream Notifications Test
 author: Prisma Cloud team
 version: " "
 ditamap: prisma-cloud-intelligence-stream-notifications
@@ -16,7 +16,7 @@ kind: chapter
 name: Prisma(TM) Cloud Intelligence Stream Significant Changes
 dir: notifications
 topics:
-- name: Prisma Cloud Intelligence Stream  
+- name: Prisma Cloud Intelligence Stream
   file: notifications.adoc
 - name: Intelligence Stream Notifications
   file: intelligence-stream-significant-impact.adoc
