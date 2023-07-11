@@ -86,14 +86,14 @@ export default async function previewChanges({
     repo: context.repo.repo,
   });
 
-  const firstComment = comments.data.find((comment) => comment.user.login === 'github-actions[bot]');
+  const firstComment = comments.data[0];
   if (firstComment) {
     await github.rest.issues.updateComment({
       issue_number: context.issue.number,
       owner: context.repo.owner,
       repo: context.repo.repo,
       comment_id: firstComment.id,
-      body,
+      body: `${firstComment.body}\n\n`,
     });
   }
   else {
