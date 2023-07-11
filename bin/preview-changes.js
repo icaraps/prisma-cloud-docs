@@ -80,17 +80,28 @@ export default async function previewChanges({
     body += `${missingReferences.map((missingReference) => `- <a href="${buildGHLink(missingReference)}" target="_blank">${cleanRefPath(missingReference)}</a>`).join('\n')}`;
   }
 
-  // await github.rest.issues.createComment({
-  //   issue_number: context.issue.number,
-  //   owner: context.repo.owner,
-  //   repo: context.repo.repo,
-  //   body,
-  // });
-
-  const list = await github.rest.issues.listComments({
+  const comments = await github.rest.issues.listComments({
     issue_number: context.issue.number,
     owner: context.repo.owner,
     repo: context.repo.repo,
   });
-  console.log(JSON.stringify(list, null, 4));
+
+  const firstComment = comments.data.find((comment) => comment.user.login === 'github-actions[bot]');
+  if (firstComment) {
+    await github.rest.issues.updateComment({
+      issue_number: context.issue.number,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      comment_id: firstComment.id,
+      body,
+    });
+  }
+  else {
+    await github.rest.issues.createComment({
+      issue_number: context.issue.number,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      body,
+    });
+  }
 }
