@@ -87,6 +87,7 @@ export default async function previewChanges({
   });
 
   const firstComment = comments.data[0];
+  console.log(JSON.stringify(comments.data, null ,4))
   if (firstComment) {
     await github.rest.issues.updateComment({
       issue_number: context.issue.number,
